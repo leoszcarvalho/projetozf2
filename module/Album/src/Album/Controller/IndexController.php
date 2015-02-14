@@ -47,10 +47,14 @@ class IndexController extends AbstractActionController
         
          if($request->isPost())
          {
-           $params = $request->getPost()->toArray();
+           //$params = $request->getPost()->toArray();
+           
+           $post = array_merge_recursive(
+            $request->getPost()->toArray(),
+            $request->getFiles()->toArray()
+            );
 
-
-           $form->setData($params);
+           $form->setData($post);
 
            $form->setInputFilter($inputFilter->getInputFilter());
 
@@ -58,7 +62,10 @@ class IndexController extends AbstractActionController
            {
              $album = new Album();
              
-             $album->exchangeArray($form->getData());
+             $data = $form->getData();
+             
+             
+             $album->exchangeArray($data);
              $this->getAlbumTable()->saveAlbum($album);
              
              return $this->redirect()->toRoute('album');
@@ -67,11 +74,7 @@ class IndexController extends AbstractActionController
            
 
          }  
-         else
-         {
-
-
-         }
+         
          
          return new ViewModel(array('form' => $form));
     

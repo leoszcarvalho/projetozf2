@@ -28,6 +28,7 @@ class AlbumForm extends Form
                     'maxlenght' => 50
                 ));
         
+        
         $title = new Element\Text();
         $title->setName('title')
               ->setAttributes(array(
@@ -35,6 +36,12 @@ class AlbumForm extends Form
                     'maxlenght' => 50
                 ));
         
+        
+        $file = new Element\File('imagefile');
+        $file->setAttribute('id', 'imagefile');
+        
+        $txt = new Element\File('txt');
+        $txt->setAttribute('id', 'img');
         
         
         
@@ -48,6 +55,8 @@ class AlbumForm extends Form
                $this->add($id);
                $this->add($artist);
                $this->add($title);
+               $this->add($file);
+               $this->add($txt);
                $this->add($submit);
     }
     
