@@ -28,7 +28,7 @@ return array(
          ),
      ),
     'module_layouts' => array(
-        'Application' => 'layout/layout',
+        'Application' => 'album/layout',
         'Album' => 'album/layout',
     ),
 

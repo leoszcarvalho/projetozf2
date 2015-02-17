@@ -13,7 +13,7 @@ return array(
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/',
+                    'route'    => '/album',
                     'defaults' => array(
                         'controller' => 'Album\Controller\Index',
                         'action'     => 'index',
@@ -29,8 +29,8 @@ return array(
                 'options' => array(
                     'route'    => '/album',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Album\Controller',
-                        'controller'    => 'Index',
+                        
+                        'controller'    => 'Album\Controller\Index',
                         'action'        => 'index',
                     ),
                 ),

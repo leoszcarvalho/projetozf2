@@ -35,6 +35,31 @@ class Module
         }
         }, 100);
         
+        $sm = $e->getApplication()->getServiceManager();
+
+        $router = $sm->get('router');
+        $request = $sm->get('request');
+        $matchedRoute = $router->match($request);
+
+        $params = $matchedRoute->getParams();
+
+        $controll = $params['controller'];
+        $action = $params['action'];
+
+        $module_array = explode('\\', $controll);
+        $module = $module_array[0];
+
+        $route = $matchedRoute->getMatchedRouteName();
+
+        $e->getViewModel()->setVariables(
+            array(
+                'CURRENT_MODULE_NAME' => $module,
+                'CURRENT_CONTROLLER_NAME' => $controll,
+                'CURRENT_ACTION_NAME' => $action,
+                'CURRENT_ROUTE_NAME' => $route,
+            )
+        );
+        
     }
 
     public function getConfig()
