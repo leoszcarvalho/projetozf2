@@ -41,7 +41,7 @@ class Module
         $request = $sm->get('request');
         $matchedRoute = $router->match($request);
 
-        $params = $matchedRoute->getParams();
+        @$params = $matchedRoute->getParams();
 
         $controll = $params['controller'];
         $action = $params['action'];

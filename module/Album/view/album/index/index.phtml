@@ -10,6 +10,7 @@
  $title = 'My albums';
  $this->headTitle($title);
  
+ 
  ?>
  <h1><?php echo $this->escapeHtml($title); ?></h1>
  <p>
@@ -18,9 +19,9 @@
 
  <table class="table">
  <tr>
-     <th>Title</th>
-     <th>Artist</th>
-     <th>Tipo</th>
+     <th><a href="/album/page/<?php echo $pagina;?>/type/title/order/<?php echo $ordem; ?>">Title</a></th>
+     <th><a href="/album/page/<?php echo $pagina;?>/type/artist/order/<?php echo $ordem; ?>">Artist</a></th>
+     <th><a href="/album/page/<?php echo $pagina;?>/type/tipo/order/<?php echo $ordem; ?>">Tipo</a></th>
      <th>&nbsp;</th>
  </tr>
  <?php 
@@ -54,7 +55,7 @@
      'partial/paginator.phtml',
      // the route to link to when a user clicks a control link
      array(
-         'route' => 'album'
+         'route' => 'list_album'
      )
  );
  ?>

@@ -1,12 +1,30 @@
-<?php if ($this->pageCount): ?>
+<?php 
+
+
+$server_url = $_SERVER['REQUEST_URI'];
+$divide = explode("/", $server_url);
+
+if(empty($divide[5]))
+{
+    $type = 'title';
+    $order = 'ASC';
+}
+else 
+{
+    $type = $divide[5];
+    $order = $divide[7];
+    
+}
+
+if ($this->pageCount): ?>
      <div>
          <ul class="pagination">
              <!-- Previous page link -->
              <?php if (isset($this->previous)): ?>
                  <li>
-                     <a href="<?php echo $this->url($this->route); ?>/page/<?php echo $this->previous; ?>">
-                         <<
-                     </a>
+                  <a href="<?php echo $this->url($this->route); ?>/page/<?php echo $this->previous; ?>/type/<?php echo $type; ?>/order/<?php echo $order; ?>">
+                   <<
+                  </a>
                  </li>
              <?php else: ?>
                  <li class="disabled">
@@ -20,7 +38,8 @@
              <?php foreach ($this->pagesInRange as $page): ?>
                  <?php if ($page != $this->current): ?>
                      <li>
-                         <a href="<?php echo $this->url($this->route);?>/page/<?php echo $page; ?>">
+                         <a href="<?php echo $this->url($this->route);?>/page/<?php echo $page; ?>/type/<?php echo $type; ?>/order/<?php echo  $order;
+ ?>">
                              <?php echo $page; ?>
                          </a>
                      </li>
@@ -34,7 +53,7 @@
              <!-- Next page link -->
              <?php if (isset($this->next)): ?>
                  <li>
-                     <a href="<?php echo $this->url($this->route); ?>/page/<?php echo $this->next; ?>">
+                     <a href="<?php echo $this->url($this->route); ?>/page/<?php echo $this->next; ?>/type/<?php echo $tipo; ?>/order/<?php echo $order; ?>">
                          >>
                      </a>
                  </li>

@@ -7,6 +7,7 @@ namespace Album\Model;
  use Zend\Db\Sql\Select;
  use Zend\Paginator\Adapter\DbSelect;
  use Zend\Paginator\Paginator;
+ use Album\Model\Extras;
  
  class AlbumTable
  {
@@ -17,20 +18,25 @@ namespace Album\Model;
          $this->tableGateway = $tableGateway;
      }
 
-     public function fetchAll($paginated=false)
+     public function fetchAll($paginated=false,$type='title',$order='ASC')
      {
+         
+         
          if ($paginated) 
          {
+             
              // create a new Select object for the table album
              $select = new Select('albums');
              $select->join("midias", "albums.tipo = midias.id",array('midia'),"inner");
-             //$select->columns(array("artist","title","midias.midia","albums.id"));
-             //print_r($select);
+             $select->order($type." ".$order);
+             
              //die();
              // create a new result set based on the Album entity
              $resultSetPrototype = new ResultSet();
              $resultSetPrototype->setArrayObjectPrototype(new Album());
              // create a new pagination adapter object
+             
+             
              $paginatorAdapter = new DbSelect(
                  // our configured select object
                  $select,
@@ -40,13 +46,21 @@ namespace Album\Model;
                  $resultSetPrototype
              );
              
+             
+             
              $paginator = new Paginator($paginatorAdapter);
              
              
+             
              return $paginator;
+             
+
          }
+         
          $resultSet = $this->tableGateway->select();
+         
          return $resultSet;
+         
      }
 
      public function getAlbum($id)
