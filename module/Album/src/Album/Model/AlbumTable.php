@@ -23,6 +23,10 @@ namespace Album\Model;
          {
              // create a new Select object for the table album
              $select = new Select('albums');
+             $select->join("midias", "albums.tipo = midias.id",array('midia'),"inner");
+             //$select->columns(array("artist","title","midias.midia","albums.id"));
+             //print_r($select);
+             //die();
              // create a new result set based on the Album entity
              $resultSetPrototype = new ResultSet();
              $resultSetPrototype->setArrayObjectPrototype(new Album());
@@ -35,7 +39,10 @@ namespace Album\Model;
                  // the result set to hydrate
                  $resultSetPrototype
              );
+             
              $paginator = new Paginator($paginatorAdapter);
+             
+             
              return $paginator;
          }
          $resultSet = $this->tableGateway->select();

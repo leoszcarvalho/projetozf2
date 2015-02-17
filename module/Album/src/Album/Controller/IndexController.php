@@ -38,10 +38,35 @@ class IndexController extends AbstractActionController
         // set the number of items per page to 10
         $paginator->setItemCountPerPage(10);
         
+        //print_r($paginator);
+        
         return new ViewModel(array('paginator' => $paginator));
         
         //Retorna tudo em uma página só
         //return new ViewModel(array('albums' => $this->getAlbumTable()->fetchAll()));
+        
+        /*SELECT LIVRE NA PÁGINA
+         * use Zend\Db\Sql\Sql;
+           use Zend\Db\Adapter\Adapter;
+             $this->tableGateway->adapter->
+             $dbAdapterConfig = array(
+            'driver'   => 'Mysqli',
+            'database' => 'webdb',
+            'username' => 'root',
+            'password' => 'hulk3005'
+            );
+             
+             $sql = "SELECT * FROM albums";
+             
+             $dbAdapter = new Adapter($dbAdapterConfig);
+             
+             $resultado = $dbAdapter->query($sql, \Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+             
+             $selecao = $resultado->toArray();
+             
+             print_r($selecao);
+             */
+        
     }
     
     
