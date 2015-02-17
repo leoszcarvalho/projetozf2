@@ -39,6 +39,11 @@ class IndexController extends AbstractActionController
     public function addAction()
     {
         
+        if(!isset($erro))
+        {
+            $erro = "";
+        }
+        
         $form = new AlbumForm();
         
         $inputFilter = new FormFilter();
@@ -49,34 +54,53 @@ class IndexController extends AbstractActionController
          {
            //$params = $request->getPost()->toArray();
            
-           $post = array_merge_recursive(
-            $request->getPost()->toArray(),
-            $request->getFiles()->toArray()
-            );
+             $array_post = $request->getPost()->toArray();
+             $array_files = $request->getFiles()->toArray();
 
+           $post = array_merge_recursive(
+            $array_post,
+            $array_files
+            );
+           
+           
+           
            $form->setData($post);
 
            $form->setInputFilter($inputFilter->getInputFilter());
-
-           if($form->isValid())
+           
+           if(!empty($array_files['arq_imagem']['name'] && $array_files['arq_texto']['name']))
            {
-             $album = new Album();
-             
-             $data = $form->getData();
-             
-             
-             $album->exchangeArray($data);
-             $this->getAlbumTable()->saveAlbum($album);
-             
-             return $this->redirect()->toRoute('album');
+               //Se o usuário tiver enviado os arquivos
+               
+               if($form->isValid())
+               {
+                   
+                 $album = new Album();
 
+                 $data = $form->getData();
+
+
+                 $album->exchangeArray($data);
+                 $this->getAlbumTable()->saveAlbum($album);
+
+                 return $this->redirect()->toRoute('album');
+
+              }
            }
+           else
+           {
+               
+              $erro = "É necessário enviar os dois arquivos";
+              
+           }
+           
+           
            
 
          }  
          
          
-         return new ViewModel(array('form' => $form));
+         return new ViewModel(array('form' => $form, 'erro' => $erro));
     
          
     }
@@ -114,14 +138,28 @@ class IndexController extends AbstractActionController
          $form->bind($album);
                        //die();
 
-         $form->get('enviar')->setAttribute('value', 'Edit');
+         $form->get('enviar')->setAttribute('value', 'Salvar');
 
          $request = $this->getRequest();
+         
+         
          if ($request->isPost()) {
-             $form->setInputFilter($inputFilter->getInputFilter());
-             $form->setData($request->getPost());
+             
+             $post = array_merge_recursive(
+            $request->getPost()->toArray(),
+            $request->getFiles()->toArray()
+            );
 
+           $form->setData($post);
+
+           $form->setInputFilter($inputFilter->getInputFilter());
+             
+             
+                
              if ($form->isValid()) {
+                 
+                 
+
                  $this->getAlbumTable()->saveAlbum($album);
 
                  // Redirect to list of albums
@@ -131,7 +169,7 @@ class IndexController extends AbstractActionController
 
          
          
-         return new ViewModel(array('form' => $form, 'id' => $id));
+         return new ViewModel(array('form' => $form, 'id' => $id, 'album' => $album));
     
          
     }

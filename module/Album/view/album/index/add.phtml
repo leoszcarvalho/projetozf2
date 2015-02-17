@@ -3,7 +3,11 @@
 echo $this->form()->openTag($form);
 
 
+
 echo $this->formRow($form->get('id')); 
+
+
+
 ?>
 
 <table width='500'>
@@ -21,16 +25,34 @@ echo $this->formRow($form->get('id'));
     </tr>
     <tr>
         <td>Imagem: </td>
-        <td><?php  echo $this->formRow($form->get('imagefile')); ?></td>
+        <td><?php  echo $this->formRow($form->get('arq_imagem')); ?></td>
     </tr>
     <tr>
         <td>Txt: </td>
-        <td><?php  echo $this->formRow($form->get('txt')); ?></td>
+        <td><?php  echo $this->formRow($form->get('arq_texto')); ?></td>
     </tr>
+    <?php
+    if(!empty($erro))
+    {
+    ?>
+    <tr>
+        <td>&nbsp;</td>
+        <td>
+            <ul>
+               <li>
+                   <?php  echo $erro;?>
+               </li>
+            </ul>
+        </td>
+    </tr>
+    <?php
+    }
+    ?>
     <tr>
         <td>&nbsp;</td>
         <td><?php  echo $this->formRow($form->get('enviar'));?></td>
     </tr>
+    
 </table>
 
 <?php

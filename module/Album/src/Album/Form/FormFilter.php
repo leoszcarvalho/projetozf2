@@ -63,27 +63,34 @@ class FormFilter implements InputFilterAwareInterface
         $imageSize->setMessages(array(\Zend\Validator\File\ImageSize::NOT_DETECTED => 'O tamanho da imagem não foi detectado'));
         
         $fileRenameFilter = new \Zend\Filter\File\RenameUpload(array(
-                'target'    => './data/tmpuploads/',
+                'target'    => './public/img/',
                 'useUploadName' => true,
                 'randomize' => true,
             ));
         
-        $validator = new \Zend\Validator\File\MimeType(array('magicFile' => false, 'mimeType' => 'image/png,image/jpg,image/jpeg'));
+        $validatorType = new \Zend\Validator\File\MimeType(array('magicFile' => false, 'mimeType' => 'image/png,image/jpg,image/jpeg'));
         
-        $validator->setMessages(array(\Zend\Validator\File\MimeType::FALSE_TYPE => 'A imagem precisa estar em jpg ou png'));
+        $validatorType->setMessages(array(\Zend\Validator\File\MimeType::FALSE_TYPE => 'A imagem precisa estar em jpg ou png'));
         
         $inputFilter->add($factory->createInput(array(
-            'name' => 'imagefile',
-            'required' => true,
+            'name' => 'arq_imagem',
+            'required' => false,
             'filters' => array($fileRenameFilter),
-            'validators' => array($size, $imageSize, $validator)
+            'validators' => array($size, $imageSize, $validatorType)
             )
                 ));
         
+        $validatorTypeTxt = new \Zend\Validator\File\MimeType(array('magicFile' => false, 'mimeType' => 'text/plain'));
+        
+        $validatorTypeTxt->setMessages(array(\Zend\Validator\File\MimeType::FALSE_TYPE => 'O arquivo precisa ser txt (text/plain)'));
+        
+        
         $inputFilter->add($factory->createInput(array(
-            'name' => 'txt',
-            'required' => true,
+            'name' => 'arq_texto',
+            'required' => false,
             'filters' => array($fileRenameFilter),
+            'validators' => array($validatorTypeTxt)
+
             )
                 ));
         

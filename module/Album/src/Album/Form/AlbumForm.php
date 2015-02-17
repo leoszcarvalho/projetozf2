@@ -37,11 +37,11 @@ class AlbumForm extends Form
                 ));
         
         
-        $file = new Element\File('imagefile');
-        $file->setAttribute('id', 'imagefile');
+        $file = new Element\File('arq_imagem');
+        $file->setAttribute('id', 'arq_imagem');
         
-        $txt = new Element\File('txt');
-        $txt->setAttribute('id', 'img');
+        $txt = new Element\File('arq_texto');
+        $txt->setAttribute('id', 'arq_texto');
         
         
         

@@ -1,0 +1,27 @@
+
+module mypol 1.0;
+
+require {
+	type httpd_t;
+	type httpd_sys_content_t;
+	type avahi_t;
+	class dbus send_msg;
+	class file { write create };
+	class dir { write add_name };
+}
+
+#============= avahi_t ==============
+
+#!!!! This avc is allowed in the current policy
+allow avahi_t httpd_t:dbus send_msg;
+
+#============= httpd_t ==============
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t avahi_t:dbus send_msg;
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t httpd_sys_content_t:dir { write add_name };
+
+#!!!! This avc is allowed in the current policy
+allow httpd_t httpd_sys_content_t:file { write create };

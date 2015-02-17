@@ -32,19 +32,22 @@ namespace Album\Model;
 
      public function saveAlbum(Album $album)
      {
-         $imageName = basename($album->imagefile['tmp_name']);
-         $txtName = basename($album->txt['tmp_name']);
+         $id = (int) $album->id;
+
+         $imageName = basename($album->arq_imagem['tmp_name']);
+         $txtName = basename($album->arq_texto['tmp_name']);
          
          $data = array(
              'artist' => $album->artist,
              'title'  => $album->title,
-             'arq_imagem'  => $imageName,
-             'arq_texto'  => $txtName,
          );
           
-         //print_r($album->imagefile);
+         if(!empty($imageName)){$data['arq_imagem'] = $imageName;}
+         if(!empty($txtName)){$data['arq_texto'] = $txtName;}
          
-         $id = (int) $album->id;
+         
+         //print_r($this->tableGateway->getSql($this->tableGateway->insert($data)));
+         
          if ($id == 0) {
              $this->tableGateway->insert($data);
          } else {

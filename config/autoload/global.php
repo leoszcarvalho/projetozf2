@@ -27,4 +27,9 @@ return array(
                      => 'Zend\Db\Adapter\AdapterServiceFactory',
          ),
      ),
+    'module_layouts' => array(
+        'Application' => 'layout/layout',
+        'Album' => 'album/layout',
+    ),
+
  );
