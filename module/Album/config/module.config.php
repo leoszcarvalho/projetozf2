@@ -52,6 +52,24 @@ return array(
                 ),
             ),
             
+            'list_album' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route' => '/album[/page/:page[/]]',
+                    'constraints' => array(
+                                'page' => '[0-9]*',
+                                
+                            ),
+                    'defaults' => array(
+                        'controller' => 'Album\Controller\Index',
+                        'action' => 'index',
+                        
+                        //Se quiser colocar default pro parâmetro -> 'id' => 1
+                    )
+                    
+                )
+            ),
+            
             'edit_album' => array(
                 'type'    => 'Segment',
                 'options' => array(
