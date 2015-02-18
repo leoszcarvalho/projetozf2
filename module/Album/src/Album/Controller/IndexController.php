@@ -14,6 +14,7 @@ use Zend\View\Model\ViewModel;
 use Album\Model\Album;
 use Album\Form\AlbumForm;
 use Album\Form\FormFilter;
+use Album\Model\Extras;
 
 class IndexController extends AbstractActionController
 {
@@ -31,16 +32,33 @@ class IndexController extends AbstractActionController
     
     public function indexAction()
     {
+        
+        $type = $this->params()->fromRoute('type','title');
+        $order = $this->params()->fromRoute('order','ASC');
+        
+        $verificacao = new Extras();
+        $order = $verificacao->determinaOrdem($order);
+        
+        
+        if($order == false){$this->redirect()->toRoute('album');}
+        
+        if($verificacao->existe($type) == false){$this->redirect()->toRoute('album');}
+         
         // grab the paginator from the AlbumTable
-        $paginator = $this->getAlbumTable()->fetchAll(true);
+        $paginator = $this->getAlbumTable()->fetchAll(true,$type,$order);
+        
+        
+        //die();
+        
         // set the current page to what has been passed in query string, or to 1 if none set
         $paginator->setCurrentPageNumber((int) $this->params()->fromRoute('page', 1));
         // set the number of items per page to 10
         $paginator->setItemCountPerPage(10);
         
-        //print_r($paginator);
+        $pagina = $this->params()->fromRoute('page', 1);
         
-        return new ViewModel(array('paginator' => $paginator));
+        
+        return new ViewModel(array('paginator' => $paginator, 'pagina' => $pagina, 'tipo' => $type, 'ordem' => $order));
         
         //Retorna tudo em uma página só
         //return new ViewModel(array('albums' => $this->getAlbumTable()->fetchAll()));

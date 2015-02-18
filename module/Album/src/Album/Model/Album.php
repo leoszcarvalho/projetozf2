@@ -26,4 +26,6 @@ namespace Album\Model;
          return get_object_vars($this);
      }
      
+     
+     
  }
