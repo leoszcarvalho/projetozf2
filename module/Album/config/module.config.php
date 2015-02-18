@@ -55,11 +55,9 @@ return array(
             'list_album' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route' => '/album[/page/:page[/type/:type[/order/:order]]]',
+                    'route' => '/album[/page/:page[/]]',
                     'constraints' => array(
                                 'page' => '[0-9]*',
-                                'type' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'order' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 
                             ),
                     'defaults' => array(
