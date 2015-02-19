@@ -48,8 +48,8 @@ namespace Autenticacao\Model;
             
                 $sessao = new Container('Autenticacao');
                 $sessao->identidade = $authAdapter->getResultRowObject();
-                var_dump($sessao->identidade);
-                //return $authAdapter->getResultRowObject();
+                
+                return true;
             
             
         }
