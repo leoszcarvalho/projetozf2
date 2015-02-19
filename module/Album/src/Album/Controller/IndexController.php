@@ -32,6 +32,7 @@ class IndexController extends AbstractActionController
     
     public function indexAction()
     {
+                
         
         $type = $this->params()->fromRoute('type','title');
         $order = $this->params()->fromRoute('order','ASC');

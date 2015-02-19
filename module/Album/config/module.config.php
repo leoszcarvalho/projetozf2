@@ -29,8 +29,8 @@ return array(
                 'options' => array(
                     'route'    => '/album',
                     'defaults' => array(
-                        
-                        'controller'    => 'Album\Controller\Index',
+                        '__NAMESPACE__' => 'Album\Controller',
+                        'controller'    => 'Index',
                         'action'        => 'index',
                     ),
                 ),

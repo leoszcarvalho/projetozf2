@@ -28,7 +28,9 @@ return array(
          ),
      ),
     'module_layouts' => array(
+        //'Autenticacao' => 'autenticacao/layout',
         'Application' => 'album/layout',
+        'Autenticacao' => 'autenticacao/layout',
         'Album' => 'album/layout',
     ),
 

@@ -7,35 +7,22 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Album;
+namespace Autenticacao;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-use Album\Model\Album;
-use Album\Model\AlbumTable;
+use Autenticacao\Model\Login;
+use Autenticacao\Model\LoginTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
-use Zend\Session\Container;
-use Zend\Mvc\Controller\AbstractActionController;
 
 class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        
-        
-        $sessao = new Container('Autenticacao');
-        
-        
-        
-        
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-        
-        
-        
-        
         
         
         
@@ -74,29 +61,8 @@ class Module
             )
         );
         
-       
-        if($sessao->identidade == null && ($route != 'autenticacao'))
-        {
-            echo $route;
-          $url = $e->getRouter()->assemble(array('action' => 'index'), array('name' => 'autenticacao'));
-          $response=$e->getResponse();
-          $response->getHeaders()->addHeaderLine('Location', $url);
-
-          $response->setStatusCode(302);
-        
-          $response->sendHeaders();
-          
-          $e->stopPropagation();
-          return false;
-
-            
-        }
-        
         
     }
-    
-    
-    
 
     public function getConfig()
     {
@@ -114,22 +80,23 @@ class Module
         );
     }
     
-     public function getServiceConfig()
+    public function getServiceConfig()
      {
          return array(
              'factories' => array(
-                 'Album\Model\AlbumTable' =>  function($sm) {
-                     $tableGateway = $sm->get('AlbumTableGateway');
-                     $table = new AlbumTable($tableGateway);
+                 'Autenticacao\Model\LoginTable' =>  function($sm) {
+                     $tableGateway = $sm->get('LoginTableGateway');
+                     $table = new LoginTable($tableGateway);
                      return $table;
                  },
-                 'AlbumTableGateway' => function ($sm) {
+                 'LoginTableGateway' => function ($sm) {
                      $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                      $resultSetPrototype = new ResultSet();
-                     $resultSetPrototype->setArrayObjectPrototype(new Album());
-                     return new TableGateway('albums', $dbAdapter, null, $resultSetPrototype);
+                     $resultSetPrototype->setArrayObjectPrototype(new Login());
+                     return new TableGateway('usuarios', $dbAdapter, null, $resultSetPrototype);
                  },
              ),
          );
      }
+    
 }
