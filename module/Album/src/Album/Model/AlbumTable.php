@@ -8,6 +8,7 @@ namespace Album\Model;
  use Zend\Paginator\Adapter\DbSelect;
  use Zend\Paginator\Paginator;
  use Album\Model\Extras;
+ use Zend\Db\Adapter\Adapter;
  
  class AlbumTable
  {
@@ -17,6 +18,9 @@ namespace Album\Model;
      {
          $this->tableGateway = $tableGateway;
      }
+     
+     
+     
 
      public function fetchAll($paginated=false,$type='title',$order='ASC')
      {
@@ -62,6 +66,8 @@ namespace Album\Model;
          return $resultSet;
          
      }
+     
+     
 
      public function getAlbum($id)
      {
@@ -84,6 +90,7 @@ namespace Album\Model;
          $data = array(
              'artist' => $album->artist,
              'title'  => $album->title,
+             'tipo'  => $album->tipo,
          );
           
          if(!empty($imageName)){$data['arq_imagem'] = $imageName;}
