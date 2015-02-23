@@ -1,0 +1,28 @@
+<?php
+ // module/Album/view/album/album/delete.phtml:
+
+ $title = 'Multi delete album';
+ $this->headTitle($title);
+ 
+ //$ids = $this->ids;
+ 
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+ <p>Você tem certeza que deseja deletar os registros 
+     <?php
+     
+     echo $valores;
+     
+     ?>?
+ </p>
+ 
+ <form action="" method="post">
+ <div>
+     <input type="hidden" name="id" value="<?php echo (int) $album->id; ?>" />
+     <input type="hidden" name="ids" value="<?php echo $valores; ?>"/>
+     <input type="submit" name="del" value="Yes" />
+     <input type="submit" name="del" value="No" />
+ </div>
+ </form>
+

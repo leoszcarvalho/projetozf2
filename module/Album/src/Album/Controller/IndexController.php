@@ -14,6 +14,7 @@ use Zend\View\Model\ViewModel;
 use Album\Model\Album;
 use Album\Form\AlbumForm;
 use Album\Form\FormFilter;
+use Album\Form\IndexForm;
 use Album\Model\Extras;
 
 class IndexController extends AbstractActionController
@@ -59,7 +60,9 @@ class IndexController extends AbstractActionController
         $pagina = $this->params()->fromRoute('page', 1);
         
         
-        return new ViewModel(array('paginator' => $paginator, 'pagina' => $pagina, 'tipo' => $type, 'ordem' => $order));
+        $form = new IndexForm();
+        
+        return new ViewModel(array('paginator' => $paginator, 'pagina' => $pagina, 'tipo' => $type, 'ordem' => $order, 'form' => $form));
         
         //Retorna tudo em uma página só
         //return new ViewModel(array('albums' => $this->getAlbumTable()->fetchAll()));
@@ -256,6 +259,69 @@ class IndexController extends AbstractActionController
                 ));
     }
     
-    
+    public function multiDeleteAction()
+    {
+        
+         
+         
+
+         $request = $this->getRequest();
+         if ($request->isPost()) {
+             $del = $request->getPost('del');
+             $ids = $request->getPost('delete');
+             $values = $request->getPost('ids');
+             
+            @$array = array_filter($ids,'strlen');
+     
+            $valores = "";
+            
+            if(empty($array) && empty($values))
+            {
+                return $this->redirect()->toRoute('album');
+            }
+            
+            
+            if(!empty($array))
+            {
+                foreach($array as $id)
+                {
+                    if($id != end($array))
+                    {
+                        $valores .= $id.", ";
+                        
+                    }
+                    else
+                    {
+                        $valores .= $id;
+                    }
+                }
+            }
+            
+            
+             if ($del == 'Yes' && !empty($values)) 
+             {
+                 $array = explode(",",$values);
+                 
+                 
+                 foreach($array as $id)
+                 {
+                   $this->getAlbumTable()->deleteAlbum($id);
+
+                 }
+                 
+                 return $this->redirect()->toRoute('album');
+
+             }
+             else if($del == 'No')
+             {
+                 return $this->redirect()->toRoute('album');
+             }
+             
+         }
+
+         
+        
+        return new ViewModel(array('valores' => $valores));
+    }
     
 }

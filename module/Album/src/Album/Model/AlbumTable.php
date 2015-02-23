@@ -91,6 +91,7 @@ namespace Album\Model;
              'artist' => $album->artist,
              'title'  => $album->title,
              'tipo'  => $album->tipo,
+             'acustico'  => $album->acustico,
          );
           
          if(!empty($imageName)){$data['arq_imagem'] = $imageName;}

@@ -89,7 +89,10 @@ class AlbumForm extends Form
         $txt = new Element\File('arq_texto');
         $txt->setAttribute('id', 'arq_texto');
         
-        
+        $acustico = new Element\Checkbox('acustico');
+        $acustico->setUseHiddenElement(true);
+        $acustico->setCheckedValue(1);
+        $acustico->setUncheckedValue(0);
         
         $submit = new Element\Submit();
         $submit->setName('enviar')
@@ -102,6 +105,7 @@ class AlbumForm extends Form
                $this->add($artist);
                $this->add($title);
                $this->add($tipo);
+               $this->add($acustico);
                $this->add($file);
                $this->add($txt);
                $this->add($submit);

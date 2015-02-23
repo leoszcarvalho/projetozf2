@@ -17,13 +17,16 @@
      <a href="/album/add">Add new album</a>
  </p>
 
- <table class="table">
+ <?php echo $this->form()->openTag($form); ?>
+ <table class="table" id="grid">
  <tr>
+     <th><input type="checkbox" name="todos" id="todos" value="todos"  ></th>
      <th><a href="/album/page/<?php echo $pagina;?>/type/title/order/<?php echo $ordem; ?>">Title</a></th>
      <th><a href="/album/page/<?php echo $pagina;?>/type/artist/order/<?php echo $ordem; ?>">Artist</a></th>
      <th><a href="/album/page/<?php echo $pagina;?>/type/tipo/order/<?php echo $ordem; ?>">Tipo</a></th>
      <th>&nbsp;</th>
  </tr>
+ <tbody style="border-top: none;">
  <?php 
  
  foreach ($this->paginator as $album) : 
@@ -33,6 +36,7 @@
  
  ?>
  <tr>
+     <td><?php echo $this->formRow($form->get('delete[]')->setCheckedValue($album->id));?></td>
      <td><?php echo $this->escapeHtml($album->title);?></td>
      <td><?php echo $this->escapeHtml($album->artist);?></td>
      <td><?php echo $this->escapeHtml($album->midia);?></td>
@@ -42,9 +46,12 @@
      </td>
  </tr>
  <?php endforeach; ?>
+ </tbody>
  </table>
- 
 <?php
+echo $this->formRow($form->get('deletar'));
+echo $this->form()->closeTag($form);
+
  // add at the end of the file after the table
  echo $this->paginationControl(
      // the paginator object
@@ -59,3 +66,39 @@
      )
  );
  ?>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		/* ao clicar no todos, seleciona todos e altera a class de todas as linhas */
+		$("input[name='todos']").click(function(){
+			var ckd = $( this ).attr('checked');
+ 
+			$("#grid input[type='checkbox']").attr({checked: ckd});
+			toogle_class( ckd, $('#grid tbody tr') );
+		});
+		/* ao clicar no checkbox, altera a class da linha */
+		$("input[name='delete[]']").click(function(){
+			toogle_class( $( this ).attr('checked'), $( this ).parents('tr') );
+		});
+		$("#grid tr").click(function( e ){
+			if( e.target.tagName!='INPUT' )
+			{
+				var checkbox = $( this ).find("input[type='checkbox']");
+				var ckd = !checkbox.attr('checked');
+ 
+				checkbox.attr('checked', ckd);
+				toogle_class( ckd, $( this ) );
+			}
+		});
+	});
+	function toogle_class( ckd, el ){
+		if( ckd==true )
+			el.addClass('selecionado');
+		else
+			el.removeClass('selecionado');
+	}
+	</script>
+        
+        <style type="text/css">
+	.selecionado { background:#FAFAFA; }
+	</style>

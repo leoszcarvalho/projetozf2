@@ -20,6 +20,7 @@ namespace Album\Model;
          $this->arq_texto  = (!empty($data['arq_texto'])) ? $data['arq_texto'] : null;
          $this->midia  = (!empty($data['midia'])) ? $data['midia'] : null;
          $this->tipo  = (!empty($data['tipo'])) ? $data['tipo'] : null;
+         $this->acustico  = (!empty($data['acustico'])) ? $data['acustico'] : null;
      }
      
      public function getArrayCopy()
